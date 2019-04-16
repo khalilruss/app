@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kierigby.bountyhunter">
 
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:name=".GlobalUser"
         android:allowBackup="true"
@@ -13,7 +16,11 @@
         <activity android:name=".NotificationsActivity"></activity>
         <activity android:name=".LobbyActivity" />
         <activity android:name=".JoinGameActivity" />
-        <activity android:name=".CreateGameActivity" />
+        <activity android:name=".CreateGameActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LoggedInActivity" />
+        </activity>
         <activity android:name=".ChangePasswordActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

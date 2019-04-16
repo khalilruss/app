@@ -152,9 +152,8 @@ public class CreateGameActivity extends AppCompatActivity {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
-        String encImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
-        return encImage;
+        return Base64.encodeToString(byteArray, Base64.DEFAULT);
 
 
     }

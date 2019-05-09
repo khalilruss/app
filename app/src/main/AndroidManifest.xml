@@ -10,7 +10,9 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotificationsActivity"></activity>
+        <activity android:name=".BountyHunterActivity"></activity>
+        <activity android:name=".ViewNotificationActivity" />
+        <activity android:name=".NotificationsActivity" />
         <activity android:name=".LobbyActivity" />
         <activity android:name=".JoinGameActivity" />
         <activity android:name=".CreateGameActivity" />

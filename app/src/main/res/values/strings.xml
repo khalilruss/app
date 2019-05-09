@@ -43,4 +43,5 @@
     <string name="captures_string">Captures:</string>
     <string name="challenges_completed_string">Challenges Completed:</string>
     <string name="challenges_failed_string">Challenges Failed:</string>
+    <string name="title_activity_view_notification">ViewNotificationActivity</string>
 </resources>

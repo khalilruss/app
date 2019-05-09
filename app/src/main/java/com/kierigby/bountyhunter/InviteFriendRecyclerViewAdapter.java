@@ -15,6 +15,7 @@ import com.example.bountyhunterapi.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class InviteFriendRecyclerViewAdapter extends RecyclerView.Adapter<InviteFriendRecyclerViewAdapter.MyViewHolder> {
     private static List<Friend> mFriendList;
@@ -84,8 +85,9 @@ public class InviteFriendRecyclerViewAdapter extends RecyclerView.Adapter<Invite
         return mFriendList.size();
     }
 
-    public ArrayList<User> inviteFriends() {
+    public ArrayList<UUID> inviteFriends() {
         ArrayList<User> sendInvitesTo = new ArrayList<>();
+        ArrayList<UUID> userIds = new ArrayList<>();
         for (int i = 0; i < friendsToInvite.size(); i++) {
             boolean invite = friendsToInvite.valueAt(i);
             if (invite) {
@@ -93,7 +95,12 @@ public class InviteFriendRecyclerViewAdapter extends RecyclerView.Adapter<Invite
             }
         }
 
-        return sendInvitesTo;
+        for(User user : sendInvitesTo){
+            userIds.add(user.getId());
+        }
+
+
+        return userIds;
 
     }
 

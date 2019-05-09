@@ -4,6 +4,8 @@
 
     <uses-feature android:name="android.hardware.camera"
         android:required="true" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".GlobalUser"
@@ -13,6 +15,7 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".FugitiveActivity"></activity>
         <activity android:name=".NotificationsActivity"></activity>
         <activity android:name=".LobbyActivity" />
         <activity android:name=".JoinGameActivity" />

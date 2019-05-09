@@ -45,8 +45,10 @@ public class LoggedInActivity extends AppCompatActivity {
         notificationsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notificationsI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
-                startActivity(notificationsI);
+//                Intent notificationsI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
+//                startActivity(notificationsI);
+                Intent fugitiveI = new Intent(LoggedInActivity.this,FugitiveActivity.class);
+                startActivity(fugitiveI);
             }
         });
 

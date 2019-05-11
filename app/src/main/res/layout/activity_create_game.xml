@@ -8,15 +8,21 @@
     android:padding="@dimen/_12sdp"
     tools:context=".CreateGameActivity">
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
-        app:layout_constraintDimensionRatio="1:1"
+    <ImageButton
+        android:id="@+id/backFromCreateGame"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/keyboard_backspace"
+        app:layout_constraintEnd_toEndOf="@+id/tvTitle"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvTitle"
-        app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -28,7 +34,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/_25sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/ivBack"
+        app:layout_constraintStart_toEndOf="@id/backFromCreateGame"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="@dimen/_10sdp" />
 
@@ -74,6 +80,7 @@
         app:layout_constraintTop_toBottomOf="@id/fabAddButton" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/inviteFriendsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_5sdp"
@@ -104,7 +111,7 @@
         android:text="0.5"
         android:textColor="#000"
         android:textSize="@dimen/_20sdp"
-        app:layout_constraintBottom_toTopOf="@id/btNext"
+        app:layout_constraintBottom_toTopOf="@id/btCreateGameNext"
         app:layout_constraintEnd_toStartOf="@id/tvHours"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -145,7 +152,7 @@
         app:layout_constraintTop_toTopOf="@id/tvCounter" />
 
     <Button
-        android:id="@+id/btNext"
+        android:id="@+id/btCreateGameNext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_30sdp"

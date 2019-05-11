@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="@id/map"
+    app:layout_constraintTop_toTopOf="@id/bMap"
     tools:openDrawer="end">
 
     <android.support.constraint.ConstraintLayout
@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@id/ivHam" />
 
         <fragment
-            android:id="@+id/map"
+            android:id="@+id/bMap"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="0dp"
             android:layout_height="0dp"

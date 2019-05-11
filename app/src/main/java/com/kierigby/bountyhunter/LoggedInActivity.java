@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bountyhunterapi.BountyHunterAPI;
+import com.pusher.pushnotifications.PushNotifications;
 
 public class LoggedInActivity extends AppCompatActivity {
 
@@ -45,7 +46,9 @@ public class LoggedInActivity extends AppCompatActivity {
         notificationsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent notificationsI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
+//                Intent notificationsI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
+//                startActivity(notificationsI);
+                Intent notificationsI = new Intent(LoggedInActivity.this, BountyHunterActivity.class);
                 startActivity(notificationsI);
             }
         });
@@ -59,6 +62,7 @@ public class LoggedInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ((GlobalUser) getApplication()).logoutUser();
+
             }
         });
 

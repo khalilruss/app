@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,7 +31,7 @@ public class BountyHunterActivity extends AppCompatActivity implements OnMapRead
 
         drawer = findViewById(R.id.drawer);
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.bMap);
         if (mapFragment != null) mapFragment.getMapAsync(this);
 
         findViewById(R.id.ivHam).setOnClickListener(new View.OnClickListener() {
@@ -57,31 +58,36 @@ public class BountyHunterActivity extends AppCompatActivity implements OnMapRead
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         LatLng sydney = new LatLng(30.733315, 76.779419);
+        // Add a marker in Sydney and move the camera
+        LatLng guildford = new LatLng(51.2362, 0.5704);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(guildford));
 
-        try {
-            ConstraintLayout layout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.layout_custom_marker, null);
-
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            layout.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-            layout.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
-            layout.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
-            layout.buildDrawingCache();
-            Bitmap bitmap = Bitmap.createBitmap(layout.getMeasuredWidth(), layout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-
-            Canvas canvas = new Canvas(bitmap);
-            layout.draw(canvas);
-
-            googleMap.addMarker(new MarkerOptions()
-                    .position(sydney)
-                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Toast.makeText(getApplicationContext(),"We here",Toast.LENGTH_LONG).show();
+//            ConstraintLayout layout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.layout_custom_marker, null);
+//
+//            DisplayMetrics displayMetrics = new DisplayMetrics();
+//            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//            layout.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
+//                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
+//            layout.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
+//            layout.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
+//            layout.buildDrawingCache();
+//            Bitmap bitmap = Bitmap.createBitmap(layout.getMeasuredWidth(), layout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+//
+//            Canvas canvas = new Canvas(bitmap);
+//            layout.draw(canvas);
+//
+//            googleMap.addMarker(new MarkerOptions()
+//                    .position(sydney)
+//                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
+//
+//            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 15));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

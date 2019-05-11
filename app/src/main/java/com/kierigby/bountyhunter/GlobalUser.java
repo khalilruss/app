@@ -1,11 +1,20 @@
 package com.kierigby.bountyhunter;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bountyhunterapi.BountyHunterAPI;
 import com.example.bountyhunterapi.User;
+import com.google.firebase.messaging.RemoteMessage;
+import com.pusher.pushnotifications.PushNotificationReceivedListener;
+import com.pusher.pushnotifications.PushNotifications;
 
 public class GlobalUser extends Application {
     User loggedInUser;
@@ -23,7 +32,9 @@ public class GlobalUser extends Application {
         this.loggedInUser = null;
         api = new BountyHunterAPI(this);
         api.clearToken();
+        PushNotifications.clearAllState();
         Intent logoutI = new Intent(getApplicationContext(), MainActivity.class);
+        logoutI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(logoutI);
     }
 
@@ -40,6 +51,5 @@ public class GlobalUser extends Application {
             }
         });
     }
-
 
 }

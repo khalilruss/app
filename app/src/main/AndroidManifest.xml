@@ -9,7 +9,9 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
     <application
         android:name=".GlobalUser"
@@ -31,13 +33,20 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
         <activity android:name=".FugitiveActivity" />
         <activity android:name=".BountyHunterActivity" />
         <activity android:name=".ViewNotificationActivity" />
-        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".NotificationsActivity">
+            <intent-filter>
+                <action android:name="JOIN_GAME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".LobbyActivity" />
         <activity android:name=".JoinGameActivity" />
-        <activity android:name=".CreateGameActivity" >
+
+        <activity android:name=".CreateGameActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LoggedInActivity" />

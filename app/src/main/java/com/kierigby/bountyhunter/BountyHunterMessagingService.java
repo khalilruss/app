@@ -12,7 +12,8 @@ public class BountyHunterMessagingService extends MessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.i("NotificationsService", "Got a remote message: 🎉"+ remoteMessage.getNotification().getBody());
-//        Toast.makeText(getApplicationContext(), remoteMessage.getMessageId(), Toast.LENGTH_LONG).show();
+        ((GlobalUser) getApplication()).addNotifications(remoteMessage.getData().get("gameID"));
+
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
 

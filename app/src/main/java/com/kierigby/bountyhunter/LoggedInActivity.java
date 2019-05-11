@@ -48,7 +48,7 @@ public class LoggedInActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                Intent notificationsI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
 //                startActivity(notificationsI);
-                Intent notificationsI = new Intent(LoggedInActivity.this, FugitiveActivity.class);
+                Intent notificationsI = new Intent(LoggedInActivity.this, BountyHunterActivity.class);
                 startActivity(notificationsI);
             }
         });

@@ -88,6 +88,7 @@ public class InviteFriendsRecyclerViewAdapter extends RecyclerView.Adapter<Invit
     public ArrayList<UUID> inviteFriends() {
         ArrayList<User> sendInvitesTo = new ArrayList<>();
         ArrayList<UUID> userIds = new ArrayList<>();
+
         for (int i = 0; i < friendsToInvite.size(); i++) {
             boolean invite = friendsToInvite.valueAt(i);
             if (invite) {

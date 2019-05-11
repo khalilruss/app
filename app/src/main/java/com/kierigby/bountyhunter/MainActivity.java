@@ -1,8 +1,15 @@
 package com.kierigby.bountyhunter;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         addListenerToLoginButton();
         addListenerToRegisterButton();
         addListenerToForgotPasswordTextView();
+
     }
 
     public void addListenerToLoginButton() {
@@ -100,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
     public void setUpPusher(String userID){
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         final String sessionToken = preferences.getString("TOKEN", null);
+//        Toast.makeText(getApplicationContext(),sessionToken.toString(),Toast.LENGTH_LONG).show();
         BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
                 "https://api.bountyhunt.me/users/pusher/beams-auth",
                 new AuthDataGetter() {

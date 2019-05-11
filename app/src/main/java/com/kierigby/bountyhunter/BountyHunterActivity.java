@@ -65,7 +65,7 @@ public class BountyHunterActivity extends AppCompatActivity implements OnMapRead
         setContentView(R.layout.activity_bounty_hunter);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fMap);
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.bMap);
         if (mapFragment != null) mapFragment.getMapAsync(this);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
                 .addLocationRequest(locationRequest = new LocationRequest().setInterval(10000).setFastestInterval(5000).setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY));

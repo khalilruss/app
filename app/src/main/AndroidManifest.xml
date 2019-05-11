@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".BountyHunterActivity"></activity>
+        <activity android:name=".HotColdActivity"
+            android:theme="@style/AppTheme.PopupOverlay">
+        </activity>
         <activity android:name=".ViewNotificationActivity" />
         <activity android:name=".NotificationsActivity" />
         <activity android:name=".LobbyActivity" />

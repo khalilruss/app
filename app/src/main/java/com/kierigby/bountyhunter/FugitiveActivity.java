@@ -1,24 +1,19 @@
 package com.kierigby.bountyhunter;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
-import com.pusher.pushnotifications.PushNotifications;
-import android.widget.Toast;
 
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,6 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -58,6 +54,7 @@ public class FugitiveActivity extends AppCompatActivity implements OnMapReadyCal
     private Location playerLoc;
     private int locationRequestCode = 1000;
     private ArrayList<Circle> circle = new ArrayList<>();
+    private ArrayList<Marker> challenge= new ArrayList<>();
 
 
     @Override
@@ -73,20 +70,6 @@ public class FugitiveActivity extends AppCompatActivity implements OnMapReadyCal
         SettingsClient client = LocationServices.getSettingsClient(this);
 
         Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-
-//        locationCallback = new LocationCallback() {
-//            @Override
-//            public void onLocationResult(LocationResult locationResult) {
-//                if (locationResult == null) {
-//                    return;
-//                }
-//                for (Location location : locationResult.getLocations()) {
-//                    playerLoc = location;
-//                }
-//            }
-//
-//
-//        };
 
         task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
             @Override
@@ -114,7 +97,7 @@ public class FugitiveActivity extends AppCompatActivity implements OnMapReadyCal
                 }
             }
         });
-
+        makeDraw();
     }
 
     @Override
@@ -150,39 +133,48 @@ public class FugitiveActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    public void updateLocation() {
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult == null) {
+                    return;
+                }
+                for (Location location : locationResult.getLocations()) {
+                    playerLoc = location;
+                }
+            }
+
+
+        };
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
 
         mMap = googleMap;
-        addUserPointer();
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
 
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            playerLoc= locationManager.getLastKnownLocation(locationManager
+                    .getBestProvider(criteria, false));
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    locationRequestCode);
+        }
+        LatLng userLocation = new LatLng(playerLoc.getLatitude(),playerLoc.getLongitude());
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
+        try {
+            drawCircle(userLocation,50);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-//        try {
-//            ConstraintLayout layout = (ConstraintLayout) getLayoutInflater().inflate(R.layout.layout_custom_marker, null);
-//
-//            DisplayMetrics displayMetrics = new DisplayMetrics();
-//            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//            layout.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
-//                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-//            layout.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
-//            layout.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
-//            layout.buildDrawingCache();
-//            Bitmap bitmap = Bitmap.createBitmap(layout.getMeasuredWidth(), layout.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-//
-//            Canvas canvas = new Canvas(bitmap);
-//            layout.draw(canvas);
-//
-//            LatLng guildford = new LatLng(51.2362, 0.5704);
-//            googleMap.addMarker(new MarkerOptions()
-//                    .position(guildford)
-//                    .icon(BitmapDescriptorFactory.fromBitmap(bitmap)));
-//
-//            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(guildford, 15));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void drawCircle(LatLng centre, int radius) throws IOException {
@@ -225,54 +217,15 @@ public class FugitiveActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
-    public void updateMarker(){
-        final LatLng userLocation = new LatLng(playerLoc.getLatitude(), playerLoc.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-
-    }
-
-    public void addUserPointer() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
-                            if (location != null) {
-                                playerLoc = location;
-                                final LatLng userLocation = new LatLng(location.getLatitude(), location.getLongitude());
-                                mMap.addMarker(new MarkerOptions().position(userLocation).title("Your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation, 15));
-                                try {
-                                    drawCircle(userLocation, 500);
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
-                    locationRequestCode);
+    public void addChallenge(LatLng challengeLocation) {
+        for (Marker challenge : challenge) {
+            challenge.remove();
         }
+        challenge.clear();
+
+        Marker newChallenge= mMap.addMarker(new MarkerOptions().position(challengeLocation).title("New Challenge").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+        challenge.add(newChallenge);
     }
 
-    public void updateLocation(){
-        locationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult == null) {
-                    return;
-                }
-                for (Location location : locationResult.getLocations()) {
-                    playerLoc = location;
-                    updateMarker();
-                }
-            }
-
-
-        };
-    }
 
 }

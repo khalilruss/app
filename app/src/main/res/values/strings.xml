@@ -44,4 +44,6 @@
     <string name="challenges_completed_string">Challenges Completed:</string>
     <string name="challenges_failed_string">Challenges Failed:</string>
     <string name="title_activity_view_notification">ViewNotificationActivity</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="join_this_game_string">Join this game</string>
 </resources>

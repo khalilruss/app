@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "929477511853",
+    "firebase_url": "https://bounty-hunter-240201.firebaseio.com",
+    "project_id": "bounty-hunter-240201",
+    "storage_bucket": "bounty-hunter-240201.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929477511853:android:af0940688d720140",
+        "android_client_info": {
+          "package_name": "com.kierigby.bountyhunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929477511853-ga0tac29627qje7aqn0q8oth9f5gmip0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kierigby.bountyhunter",
+            "certificate_hash": "ac100ee5de35b3aafeee38c1eaf06b4fa701cf5f"
+          }
+        },
+        {
+          "client_id": "929477511853-bdrd4s0f844r660fdg4csouhtj1g12l6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk1l8KjquBdkuV9HRMuj9z05A5jMaJ4as"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929477511853-bdrd4s0f844r660fdg4csouhtj1g12l6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

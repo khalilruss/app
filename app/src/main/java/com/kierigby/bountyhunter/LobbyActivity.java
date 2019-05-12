@@ -14,9 +14,7 @@ public class LobbyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lobby);
 
         tabs = findViewById(R.id.tabs);
-
-        tabs.addTab(tabs.newTab().setText("Accepted"));
-        tabs.addTab(tabs.newTab().setText("Pending"));
-        tabs.addTab(tabs.newTab().setText("Declined"));
     }
+
+
 }

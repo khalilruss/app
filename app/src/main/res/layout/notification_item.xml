@@ -57,7 +57,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.989"
-        app:layout_constraintStart_toEndOf="@+id/gameName"
+        app:layout_constraintStart_toEndOf="@+id/acceptBtn"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.6"
         app:srcCompat="@android:drawable/ic_delete" />

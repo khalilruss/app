@@ -7,6 +7,10 @@ import java.util.UUID;
 
 public class User {
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     @SerializedName("id")
     private UUID id;
     @SerializedName("firstName")
@@ -39,6 +43,16 @@ public class User {
         this.verified = verified;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+    public User(UUID id, String firstName, String lastName, String username, Date created_at, Date updated_at) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+
     }
 
     public UUID getId() {

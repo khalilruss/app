@@ -13,10 +13,6 @@ public class JoinGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_game);
 
-        tabs = findViewById(R.id.tabs);
 
-        tabs.addTab(tabs.newTab().setText("Accepted"));
-        tabs.addTab(tabs.newTab().setText("Pending"));
-        tabs.addTab(tabs.newTab().setText("Declined"));
     }
 }

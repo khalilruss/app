@@ -25,6 +25,7 @@ public class LoggedInActivity extends AppCompatActivity {
         addListenerToGameHistoryTextView();
         addListenterToNotificationsImageView();
         addListenerToCreateGameTextView();
+        addListenerToGameRulesTextView();
     }
 
     private void addListenerToProfileImageView() {
@@ -42,6 +43,9 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private void addListenterToNotificationsImageView() {
         ImageView notificationsImageView = findViewById(R.id.notificationsImageView);
+        TextView numOfNotifications= findViewById(R.id.viewRound);
+        String num= String.valueOf(((GlobalUser) getApplication()).getGames().size());
+        numOfNotifications.setText(num);
 
         notificationsImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +102,8 @@ public class LoggedInActivity extends AppCompatActivity {
         gameRulesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent gameHistoryI = new Intent(LoggedInActivity.this, NotificationsActivity.class);
+                startActivity(gameHistoryI);
             }
         });
 

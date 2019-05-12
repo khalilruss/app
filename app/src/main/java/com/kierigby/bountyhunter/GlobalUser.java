@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bountyhunterapi.BountyHunterAPI;
+import com.example.bountyhunterapi.Game;
 import com.example.bountyhunterapi.User;
 import com.google.firebase.messaging.RemoteMessage;
 import com.pusher.pushnotifications.PushNotificationReceivedListener;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 
 public class GlobalUser extends Application {
     User loggedInUser;
-    ArrayList<String> notifications= new ArrayList();
+    ArrayList<Game> games= new ArrayList();
     BountyHunterAPI api;
 
     public void setLoggedInUser(User loggedInUser) {
@@ -56,13 +57,36 @@ public class GlobalUser extends Application {
         });
     }
 
-    public void addNotifications(String newNotification){
-        notifications.add(newNotification);
+    public void addGame(Game newGame){
+        games.add(newGame);
     }
 
-    public ArrayList<String> getNotifications(){
-        return notifications;
+    public void removeGame(Game declinedGame){
+        games.remove(declinedGame);
+    }
+    public ArrayList<Game> getGames(){
+        return games;
     }
 
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("Bounty_Hunter", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        createNotificationChannel();
+    }
 }

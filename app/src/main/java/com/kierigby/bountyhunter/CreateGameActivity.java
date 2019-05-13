@@ -151,8 +151,9 @@ public class CreateGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             mSocket.emit("createGame", createGameInfo);
-            Intent lobbyI = new Intent(CreateGameActivity.this,LobbyActivity.class);
+            Intent lobbyI = new Intent(getApplicationContext(), LoggedInActivity.class);
             startActivity(lobbyI);
+            Toast.makeText(getApplicationContext(), "You will receive a notification when the game is ready to start", Toast.LENGTH_SHORT).show();
         }
     }
 

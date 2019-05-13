@@ -65,7 +65,9 @@ public class LoggedInActivity extends AppCompatActivity {
         logOutImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                PushNotifications.clearAllState();
                 ((GlobalUser) getApplication()).logoutUser();
+
 
             }
         });

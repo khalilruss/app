@@ -13,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,6 +55,9 @@ public class LobbyActivity extends AppCompatActivity {
     private LocationCallback locationCallback;
     private LocationRequest locationRequest;
     private Socket mSocket;
+    private SectionPageAdapter sectionPageAdapter;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
 
     @Override
@@ -128,6 +132,22 @@ public class LobbyActivity extends AppCompatActivity {
                     locationRequestCode);
         }
 
+        sectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
+
+        viewPager = findViewById(R.id.container);
+        setupViewPager(viewPager);
+
+        tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+
+    }
+
+    public void setupViewPager(ViewPager viewPager) {
+        SectionPageAdapter adapter = new SectionPageAdapter(getSupportFragmentManager());
+        adapter.addFragment(new FragmentInLobbyActivity(), "In Lobby");
+        adapter.addFragment(new FragmentPendingActivity(), "Pending");
+        adapter.addFragment(new FragmentDeclinedActivity(), "Declined");
+        viewPager.setAdapter(adapter);
     }
 
     public void updateLocation() {

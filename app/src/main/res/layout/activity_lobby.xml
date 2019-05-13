@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LobbyActivity">
+    tools:context=".LobbyActivity"
+    android:id="@+id/lobbyView">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/clTop"
@@ -33,7 +34,7 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@id/tvTitle"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
@@ -42,14 +43,6 @@
             app:tabTextColor="@color/white" />
 
     </android.support.constraint.ConstraintLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/btStart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/clTop" />
 
     <Button
         android:id="@+id/btStart"
@@ -65,4 +58,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
 </android.support.constraint.ConstraintLayout>

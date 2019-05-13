@@ -37,6 +37,7 @@ public class GlobalUser extends Application {
     public void logoutUser() {
         this.loggedInUser = null;
         api = new BountyHunterAPI(this);
+        PushNotifications.clearAllState();
         api.clearToken();
         Intent logoutI = new Intent(getApplicationContext(), MainActivity.class);
         logoutI.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

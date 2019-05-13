@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -28,6 +30,7 @@ import com.example.bountyhunterapi.Game;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.android.gms.common.internal.Objects;
 import com.google.firebase.messaging.RemoteMessage;
 
 import org.json.JSONException;
@@ -35,6 +38,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URISyntaxException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,7 +56,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
-    public NotificationRecyclerViewAdapter(List<String> games, SharedPreferences prefs, Context con, Application app) {
+    NotificationRecyclerViewAdapter(List<String> games, SharedPreferences prefs, Context con, Application app) {
         mGameList = games;
         application = app;
         context = con;
@@ -67,7 +71,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         mSocket.connect();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         ImageButton acceptBtn, declineBtn;
 
         /**
@@ -75,7 +79,7 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
          *
          * @param itemView the view that will be used by the item
          */
-        public MyViewHolder(final View itemView) {
+        MyViewHolder(final View itemView) {
             super(itemView);
             acceptBtn = itemView.findViewById(R.id.acceptBtn);
             declineBtn = itemView.findViewById(R.id.declineBtn);
@@ -94,7 +98,6 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
     @Override
     public void onBindViewHolder(@NonNull final NotificationRecyclerViewAdapter.MyViewHolder myViewHolder, final int i) {
         final String gameID = mGameList.get(i);
-        Toast.makeText(application.getApplicationContext(), String.valueOf(mGameList.size()), Toast.LENGTH_LONG).show();
         myViewHolder.declineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,10 +114,17 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                     public void call(Object... args) {
                         ((GlobalUser) application).removeGame(((GlobalUser) application).getGames().get(myViewHolder.getAdapterPosition()));
                         mGameList.remove(myViewHolder.getAdapterPosition());
-                        notifyItemRemoved(myViewHolder.getAdapterPosition());
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                notifyDataSetChanged();
+                            }
+                        });
                     }
                 };
-                mSocket.on("gameDecline", onGameDecline);
+                mSocket.on("gameDeclined", onGameDecline);
 
             }
         });
@@ -137,11 +147,8 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
         return mGameList.size();
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
+    void onActivityResult(int requestCode, int resultCode, final Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            if (acceptID == "practise") {
-                Log.i("Adapter","It worked");
-            } else {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 String imageToSend = encodeImage(imageBitmap);
@@ -163,13 +170,37 @@ public class NotificationRecyclerViewAdapter extends RecyclerView.Adapter<Notifi
                     e.printStackTrace();
                 }
                 mSocket.emit("joinGame", createGameInfo);
-                Intent lobbyI = new Intent(context, LobbyActivity.class);
+
+            Emitter.Listener onGameJoined = new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+//                    for(Iterator<Game> iterator =((GlobalUser) application).getGames().iterator(); iterator.hasNext(); ) {
+//                        if(String.valueOf(iterator.next().getId()).equals(acceptID))
+//                            ((GlobalUser) application).removeGame(iterator.next());
+//                    }
+//                    for(Iterator<String> iterator =mGameList.iterator(); iterator.hasNext(); ) {
+//                        if(iterator.next().equals(acceptID))
+//                            iterator.remove();
+//                    }
+//
+//                    Handler handler = new Handler(Looper.getMainLooper());
+//                    handler.post(new Runnable() {
+//
+//                        @Override
+//                        public void run() {
+//                            notifyDataSetChanged();
+//                        }
+//                    });
+                }
+            };
+            mSocket.on("gameJoined", onGameJoined);
+                Intent lobbyI = new Intent(context, LoggedInActivity.class);
                 context.startActivity(lobbyI);
-            }
+            Toast.makeText(context, "You will receive a notification when the game is ready to start", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public String encodeImage(Bitmap image) {
+    private String encodeImage(Bitmap image) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

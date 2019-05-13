@@ -10,16 +10,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.bountyhunterapi.Game;
-import com.github.nkzawa.socketio.client.Socket;
 
 import java.util.ArrayList;
 
 public class NotificationsActivity extends AppCompatActivity {
     private NotificationRecyclerViewAdapter mNotificationsRecyclerViewAdapter;
     private RecyclerView mNotificationsRecyclerView;
-    private Socket mSocket;
-    private RecyclerView.ViewHolder viewHolder;
-    private ArrayList<String> practiseList= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
